@@ -52,7 +52,7 @@ function UsersList() {
       title: "User Name",
       dataIndex: "fullName",
       key: "fullName",
-      render: (text) => <p>{text?.fullName}</p>,
+      render: (text) => <p>{text}</p>,
     },
     {
       title: "Notes Created",
