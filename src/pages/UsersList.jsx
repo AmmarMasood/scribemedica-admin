@@ -23,11 +23,11 @@ function UsersList() {
     setLoading(true);
     try {
       const res = await axiosApiInstance.delete(`${API_URL}/user/${id}`);
-      console.log(res);
+      // console.log(res);
       messageApi.success("User deleted successfully");
       getUsers();
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       messageApi.error("Unable to delete user");
     }
     setLoading(false);
@@ -38,7 +38,7 @@ function UsersList() {
   };
 
   const cancel = (e) => {
-    console.log(e);
+    // console.log(e);
   };
 
   const columns = [
@@ -89,6 +89,7 @@ function UsersList() {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
+          <Link to={`/user-detail/${_.userId}`}>Detail</Link>
           <Popconfirm
             title="Delete the user"
             description="Are you sure to delete this user?"
@@ -120,7 +121,7 @@ function UsersList() {
       users.current = res.data;
       setFilteredUsers(res.data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       messageApi.error(error.message);
     }
     setLoading(false);
@@ -130,11 +131,12 @@ function UsersList() {
     const value = e.target.value;
     const filtered = users.current.filter((user) => {
       return (
-        user.fullName.toLowerCase().includes(value.toLowerCase()) ||
+        user.fullName?.toLowerCase().includes(value.toLowerCase()) ||
         user.userId.toLowerCase().includes(value.toLowerCase())
       );
     });
     setFilteredUsers(filtered);
+    // console.log(value, "value", users.current, "users.current");
   };
   React.useEffect(() => {
     getUsers();

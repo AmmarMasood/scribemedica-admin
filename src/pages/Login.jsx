@@ -35,7 +35,7 @@ const Login = () => {
       }
     } catch (error) {
       setLoading(false);
-      console.log(error);
+      // console.log(error);
       messageApi.error(error.message);
     }
   };

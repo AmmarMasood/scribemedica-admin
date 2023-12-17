@@ -37,7 +37,7 @@ const MyLayout = (props) => {
       localStorage.removeItem("auth");
       window.location.reload();
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 

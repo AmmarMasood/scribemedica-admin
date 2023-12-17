@@ -45,6 +45,17 @@ function App() {
         />
 
         <Route
+          path={"/user-detail/:id"}
+          element={
+            <ProtectedRoute
+              component={() => <UserDetail />}
+              authValidator={localStorage.getItem("auth")}
+              navigateTo={"/"}
+            />
+          }
+        />
+
+        <Route
           path={"/user-list"}
           element={
             <ProtectedRoute

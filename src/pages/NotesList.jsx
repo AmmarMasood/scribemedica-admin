@@ -26,11 +26,11 @@ function NotesList() {
     setLoading(true);
     try {
       const res = await axiosApiInstance.delete(`${API_URL}/notes/${id}`);
-      console.log(res);
+      // console.log(res);
       messageApi.success("Note deleted successfully");
       getNotes();
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       messageApi.error("Unable to delete note");
     }
     setLoading(false);
@@ -41,7 +41,7 @@ function NotesList() {
   };
 
   const cancel = (e) => {
-    console.log(e);
+    // console.log(e);
   };
 
   const columns = [
@@ -120,7 +120,7 @@ function NotesList() {
       notes.current = res.data;
       setFilteredNotes(res.data);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       messageApi.error(error.message);
     }
     setLoading(false);
@@ -129,9 +129,12 @@ function NotesList() {
   const handleSearch = (e) => {
     const value = e.target.value;
     const filtered = notes.current.filter((note) => {
+      // console.log(note, "note");
+
       return (
-        note.patientName.toLowerCase().includes(value.toLowerCase()) ||
-        note.profile?.fullName.toLowerCase().includes(value.toLowerCase())
+        note.patientName?.toLowerCase().includes(value.toLowerCase()) ||
+        note.profile?.fullName?.toLowerCase().includes(value.toLowerCase()) ||
+        note.userId?.toLowerCase().includes(value.toLowerCase())
       );
     });
     setFilteredNotes(filtered);
@@ -146,7 +149,7 @@ function NotesList() {
       <Loading show={loading} />
       <MyLayout currentNav={["1"]}>
         <Input
-          placeholder="Search with user name or patient name"
+          placeholder="Search with user name, user id or patient name"
           onChange={handleSearch}
           style={{
             marginBottom: "20px",

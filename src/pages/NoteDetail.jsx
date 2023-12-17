@@ -7,6 +7,12 @@ import { message, Button, Popconfirm } from "antd";
 import axiosApiInstance from "../services/axios";
 import { API_URL } from "../constants/constants";
 
+function millisToMinutesAndSeconds(millis) {
+  var minutes = Math.floor(millis / 60000);
+  var seconds = ((millis % 60000) / 1000).toFixed(0);
+  return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+}
+
 function NoteDetail() {
   const [messageApi, contextHolder] = message.useMessage();
   const { id } = useParams();
@@ -22,11 +28,11 @@ function NoteDetail() {
     setLoading(true);
     try {
       const res = await axiosApiInstance.delete(`${API_URL}/notes/${id}`);
-      console.log(res);
+      // console.log(res);
       messageApi.success("Note deleted successfully");
       navigate("/note-list");
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       messageApi.error("Unable to delete note");
     }
     setLoading(false);
@@ -40,24 +46,23 @@ function NoteDetail() {
     setLoading(true);
     try {
       const res = await axiosApiInstance.get(`${API_URL}/notes/${id}`);
-      console.log(res);
+      // console.log(res);
       setNote({
         ...res.data,
         note: {
           ...res.data.note,
-          createdAt: format(new Date(res.data.note?.createdAt), "dd/MM/yyyy"),
+          createdAt: format(new Date(res.data.note?.createdAt), "MM/dd/yyyy"),
         },
 
         noteDetail: {
           ...res.data.noteDetail,
-          createdAt: format(
-            new Date(res.data.noteDetail.createdAt),
-            "dd/MM/yyyy"
-          ),
+          createdAt: res.data.noteDetail?.createdAt
+            ? format(new Date(res.data.noteDetail?.createdAt), "MM/dd/yyyy")
+            : "",
         },
       });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       messageApi.error("Unable to fetch note");
     }
     setLoading(false);
@@ -80,7 +85,9 @@ function NoteDetail() {
                 title="Delete the note"
                 description="Are you sure to delete this note?"
                 onConfirm={() => confirm(note.note?._id)}
-                onCancel={() => console.log("cancel")}
+                onCancel={() => {
+                  // console.log("cancel")
+                }}
                 okText="Yes"
                 cancelText="No"
               >
@@ -103,8 +110,8 @@ function NoteDetail() {
                   <b>Patient Name:</b> {note.note?.patientName}
                 </p>
                 <p>
-                  <b>Recording Length:</b> {note.note?.recordingLength / 10000}{" "}
-                  mins
+                  <b>Recording Length:</b>{" "}
+                  {millisToMinutesAndSeconds(note.note?.recordingLength)} mins
                 </p>
                 <p>
                   <b>Transcript</b>
