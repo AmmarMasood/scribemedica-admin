@@ -5,6 +5,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { message, Button, Popconfirm } from "antd";
 import axiosApiInstance from "../services/axios";
 import { API_URL } from "../constants/constants";
+import { auth } from "../services/firebase";
 
 function UserDetail() {
   const [messageApi, contextHolder] = message.useMessage();
@@ -22,6 +23,8 @@ function UserDetail() {
     setLoading(true);
     try {
       const res = await axiosApiInstance.delete(`${API_URL}/user/${id}`);
+      // delete user from firebase
+      // await auth.deleteUser(id);
       // console.log(res);
       messageApi.success("User deleted successfully");
       navigate("/user-list");

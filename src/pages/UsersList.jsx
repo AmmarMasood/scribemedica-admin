@@ -6,6 +6,7 @@ import { API_URL } from "../constants/constants";
 import Loading from "../components/Loading";
 import { Link } from "react-router-dom";
 import { format, set } from "date-fns";
+import { auth } from "../services/firebase";
 
 function UsersList() {
   const [messageApi, contextHolder] = message.useMessage();
@@ -24,6 +25,7 @@ function UsersList() {
     try {
       const res = await axiosApiInstance.delete(`${API_URL}/user/${id}`);
       // console.log(res);
+      // await auth.deleteUser(id);
       messageApi.success("User deleted successfully");
       getUsers();
     } catch (err) {
@@ -43,9 +45,9 @@ function UsersList() {
 
   const columns = [
     {
-      title: "User Id",
-      dataIndex: "userId",
-      key: "userId",
+      title: "User Email",
+      dataIndex: "email",
+      key: "email",
       render: (text) => <p>{text}</p>,
     },
     {

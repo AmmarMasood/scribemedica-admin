@@ -46,12 +46,6 @@ function NotesList() {
 
   const columns = [
     {
-      title: "User Id",
-      dataIndex: "userId",
-      key: "userId",
-      render: (text) => <p>{text}</p>,
-    },
-    {
       title: "Note Id",
       dataIndex: "_id",
       key: "_id",
@@ -62,6 +56,12 @@ function NotesList() {
       dataIndex: "profile",
       key: "profile",
       render: (text) => <p>{text?.fullName}</p>,
+    },
+    {
+      title: "User Email",
+      dataIndex: "profile",
+      key: "profile",
+      render: (text) => <p>{text?.email}</p>,
     },
     {
       title: "Patient Name",
