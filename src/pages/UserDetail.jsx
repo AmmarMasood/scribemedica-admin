@@ -105,6 +105,9 @@ function UserDetail() {
             <p>
               <strong>Speciality:</strong> {user.speciality}
             </p>
+            <p>
+              <strong>Referral:</strong> {user.heardAboutUs}
+            </p>
           </div>
 
           {subscriptionDetails && (
